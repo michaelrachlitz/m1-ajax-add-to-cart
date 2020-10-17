@@ -1,0 +1,7 @@
+app/code/community/Omni app/code/community/Omni
+app/design/frontend/base/default/layout/omni app/design/frontend/base/default/layout/omni
+app/design/frontend/base/default/template/omni app/design/frontend/base/default/template/omni
+app/etc/modules/Omni_AjaxAddToCart.xml app/etc/modules/Omni_AjaxAddToCart.xml
+app/locale/en_US/Omni_AjaxAddToCart.csv app/locale/en_US/Omni_AjaxAddToCart.csv
+skin/frontend/base/default/css/omni skin/frontend/base/default/css/omni
+skin/frontend/base/default/js/omni skin/frontend/base/default/js/omni
