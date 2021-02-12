@@ -19,11 +19,11 @@
     minicart : null,
     // hijack the onclick hendler for add to cart buttons
     init: function() {
-        $j('button.btn-cart').each(function(){
-            var old = $j(this).attr('onclick');
-            $j(this).attr('onclick','').data('oldclick', old).unbind('click').bind('click', function(e) {
+        jQuery('button.btn-cart').each(function(){
+            var old = jQuery(this).attr('onclick');
+            jQuery(this).attr('onclick','').data('oldclick', old).unbind('click').bind('click', function(e) {
                 e.preventDefault();
-                OmniAddToCart.onclick($j(this));
+                OmniAddToCart.onclick(jQuery(this));
             });
         });
     },
@@ -33,26 +33,26 @@
         // Make sure onclick is empty before we start, valid specially on non simple products on product page
         if(el.attr('onclick')) { el.attr('onclick',''); }
         var isProductPage = el.parents("form#product_addtocart_form").length > 0 ? 1 : 0;
-        var url = isProductPage ? $j('#product_addtocart_form').attr('action') : el.data('oldclick').replace('setLocation(\'','').replace('\')','');
+        var url = isProductPage ? jQuery('#product_addtocart_form').attr('action') : el.data('oldclick').replace('setLocation(\'','').replace('\')','');
         // Just redirect for anything other than real add to cart links ( configurable, bundle, grouped products )
         if (url.indexOf('checkout/cart/add') === -1) {
             setLocation(url);
             return false;
         }
         var origFormKey = url.split('/').filter(function(el) { return el.trim().length > 0; }).pop();
-        var oldQty = parseInt($j('div.header-minicart span.count').text());
-        var addedQty = isProductPage ? parseInt($j('#qty').val()) : 1;
+        var oldQty = parseInt(jQuery('div.header-minicart span.count').text());
+        var addedQty = isProductPage ? parseInt(jQuery('#qty').val()) : 1;
         var newQty = oldQty + addedQty;
-        var data = isProductPage ? $j('#product_addtocart_form').serialize() : null;
+        var data = isProductPage ? jQuery('#product_addtocart_form').serialize() : null;
         var type = isProductPage ? "POST" : "GET";
 
-        var request = $j.ajax({ type: type, url: url, data: data });
+        var request = jQuery.ajax({ type: type, url: url, data: data });
 
         request.done(function( data ) {
-            var error = $j(data).find( "#messages_product_view .messages .error-msg");
-            var notice = $j(data).find( "#messages_product_view .messages .notice-msg");
-            var content = $j(data).find( "#header-cart .minicart-wrapper" );
-            $j("#header-cart .minicart-wrapper").empty().append( content.html() );
+            var error = jQuery(data).find( "#messages_product_view .messages .error-msg");
+            var notice = jQuery(data).find( "#messages_product_view .messages .notice-msg");
+            var content = jQuery(data).find( "#header-cart .minicart-wrapper" );
+            jQuery("#header-cart .minicart-wrapper").empty().append( content.html() );
             if (error.length) {
                 OmniAddToCart.showError( error.find("ul li span").first().text(), origFormKey );
             } else if(notice.length) {
@@ -72,11 +72,11 @@
     },
 
     showLoader: function() {
-        $j('body').addClass('omni-ajax-backdrop');
+        jQuery('body').addClass('omni-ajax-backdrop');
     },
 
     hideLoader: function() {
-        $j('body').removeClass('omni-ajax-backdrop');
+        jQuery('body').removeClass('omni-ajax-backdrop');
         this.openMinicart();
     },
 
@@ -85,7 +85,7 @@
             this.minicart = new Minicart({formKey: formkey});
         }
         this.minicart.showError(message);
-        $j('#minicart-success-message').fadeOut('slow');
+        jQuery('#minicart-success-message').fadeOut('slow');
     },
 
     updateMinicart: function(formkey, qty) {
@@ -93,18 +93,18 @@
         this.minicart.init();
         this.minicart.updateCartQty(qty);
         this.minicart.showSuccess( "Item was added successfully." );
-        $j('#minicart-error-message').fadeOut('slow');
+        jQuery('#minicart-error-message').fadeOut('slow');
     },
 
     openMinicart: function() {
-        var isSkipContentOpen = $j('#header-cart').hasClass('skip-active') ? 1 : 0;
+        var isSkipContentOpen = jQuery('#header-cart').hasClass('skip-active') ? 1 : 0;
         if (!isSkipContentOpen) {
-            $j('#header-cart').addClass('skip-active');
+            jQuery('#header-cart').addClass('skip-active');
         }
     }
 
 };
 
-$j(document).ready(function () {
+jQuery(document).ready(function () {
     OmniAddToCart.init();
 });
